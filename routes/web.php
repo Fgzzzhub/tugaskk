@@ -7,41 +7,33 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+Route::get('/', function () {
+    return redirect()->route('threads.index');
+});
+
+// Dashboard (login required)
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
 // Menfess
 Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index');
-Route::post('/menfess', [MenfessController::class, 'store'])->name('menfess.store');
+Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');
 
-// Threads
+// Threads (index & show publik; create/store butuh login)
 Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
+Route::get('/threads/create', [ThreadController::class, 'create'])->middleware('auth')->name('threads.create');
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
-Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
-Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
+Route::post('/threads', [ThreadController::class, 'store'])->middleware('auth')->name('threads.store');
 
+// Komentar & Like (wajib login)
+Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')->name('comments.store');
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
+Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])
+    ->middleware('auth')->name('threads.like');
 
-Route::middleware(['auth'])->group(function () {
-
-    // Route::get('/menfess', [MenfessController::class, 'index']);
-    // Route::post('/menfess', [MenfessController::class, 'store'])->name('menfess.store');
-
-});
+// Logout
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 require __DIR__ . '/auth.php';
-
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
-//     Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
-
-
-Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])->name('threads.like');
-Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
-
-// });

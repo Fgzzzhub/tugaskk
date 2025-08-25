@@ -6,21 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up()
+    public function up(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->text('body')->after('id');
-        });
+        if (!Schema::hasColumn('comments', 'body')) {
+            Schema::table('comments', function (Blueprint $table) {
+                $table->text('body')->after('id');
+            });
+        }
     }
 
-    public function down()
+    public function down(): void
     {
-        Schema::table('comments', function (Blueprint $table) {
-            $table->dropColumn('body');
-        });
+        if (Schema::hasColumn('comments', 'body')) {
+            Schema::table('comments', function (Blueprint $table) {
+                $table->dropColumn('body');
+            });
+        }
     }
-
 };

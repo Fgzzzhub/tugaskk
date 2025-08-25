@@ -1,47 +1,46 @@
-<x-app-layout>
-<div class="max-w-3xl mx-auto py-8">
-    <div class="bg-gray-200 shadow-lg rounded-2xl p-6 mb-8">
-        <h1 class="text-2xl font-bold text-gray-800 mb-3">
-            {{ $thread->title }}
-        </h1>
-        <p class="text-gray-700 mb-4">
-            {{ $thread->body }}
-        </p>
-        <span class="text-sm text-gray-500">Pembuat: {{ $thread->user->name ?? 'Anonim' }}</span>
+@extends('layouts.app', ['title' => $thread->title])
+
+@section('content')
+<article class="rounded-lg border bg-white p-5">
+    <h1 class="text-2xl font-bold">{{ $thread->title }}</h1>
+    <div class="mt-1 text-sm text-gray-500">
+        oleh <span class="font-medium text-gray-700">{{ $thread->user->name ?? 'Anonim' }}</span>
+        • {{ $thread->created_at?->diffForHumans() }}
+        • <span class="px-2 py-0.5 rounded bg-gray-100">{{ $thread->comments_count }} komentar</span>
+        • <span class="px-2 py-0.5 rounded bg-gray-100">{{ $thread->likes_count }} suka</span>
     </div>
 
-    <div class="bg-gray-200 shadow-md rounded-2xl p-6">
-        <h2 class="text-lg font-semibold text-gray-800 mb-4">Komentar</h2>
+    <div class="mt-4 whitespace-pre-line text-gray-800">
+        {{ $thread->content }}
+    </div>
 
-        @forelse ($thread->comments as $comment)
-            <div class="mb-4 border-b pb-3">
-                <p class="text-gray-800">
-                    <strong>{{ $comment->user->name ?? 'Anonim' }}</strong>:
-                    {{ $comment->body }}
-                </p>
-                <span class="text-xs text-gray-500">
-                    {{ $comment->created_at->diffForHumans() }}
-                </span>
-            </div>
-        @empty
-            <p class="text-gray-500">Belum ada komentar.</p>
-        @endforelse
-
+    <div class="mt-4 flex items-center gap-2">
         @auth
-            <form action="{{ route('comments.store', $thread->id) }}" method="POST" class="mt-6">
-                @csrf
-                <textarea name="body" rows="3"
-                          class="w-full border rounded-xl p-3 focus:ring focus:ring-blue-300"
-                          placeholder="Tulis komentar..."></textarea>
-                <button type="submit"
-                        class="mt-3 px-4 py-2 bg-blue-900 text-white rounded-xl hover:bg-black duration-300 transition">
-                    Kirim
-                </button>
-            </form>
-        @else
-            <p class="text-sm text-gray-500 mt-4">Login untuk menulis komentar.</p>
+        <form action="{{ route('threads.like', $thread) }}" method="POST">
+            @csrf
+            <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
+                Suka / Batal
+            </button>
+        </form>
         @endauth
+        <a href="{{ route('threads.index') }}" class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-50">
+            Kembali
+        </a>
     </div>
-</div>
+</article>
 
-</x-app-layout>
+{{-- KOMENTAR --}}
+<section class="mt-6 rounded-lg border bg-white p-5">
+    <h2 class="text-lg font-semibold mb-3">Komentar</h2>
+
+    @auth
+    <form action="{{ route('comments.store', $thread) }}" method="POST" class="mb-4">
+        @csrf
+        <label class="block text-sm font-medium">Tulis komentar</label>
+        <textarea name="body" rows="3" class="mt-1 w-full rounded-md border-gray-300 focus:border-brand focus:ring-brand" placeholder="Pendapatmu...">{{ old('body') }}</textarea>
+        <div class="mt-2">
+            <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">Kirim</button>
+        </div>
+    </form>
+    @else
+        <div class="mb-4 rounded-md bg-yellow-50 border-l-

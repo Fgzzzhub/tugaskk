@@ -3,48 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Thread;   // <-- Tambahkan ini
-use App\Models\Comment;  // kalau kamu pakai Comment
-use App\Models\Like;     // kalau kamu pakai Like
-use App\Models\User;     // kalau ada relasi ke User
-
+use App\Models\Thread;
 
 class ThreadController extends Controller
 {
     public function index()
-{
-    $threads = Thread::with('comments')->get();
-    return view('threads.index', compact('threads'));
-}
+    {
+        // Eager-load user & counts agar hemat query
+        $threads = Thread::with(['user:id,name'])
+            ->withCount(['comments','likes'])
+            ->latest()
+            ->paginate(10);
 
+        return view('threads.index', compact('threads'));
+    }
 
-     // Menampilkan halaman detail thread
-     public function show($id)
-{
-    $thread = Thread::with('comments')->findOrFail($id);
-    return view('threads.show', compact('thread'));
-}
+    public function show(Thread $thread)
+    {
+        // Muat relasi untuk tampilan detail
+        $thread->load([
+            'user:id,name',
+            'comments.user:id,name',
+            'likes',
+        ])->loadCount(['comments','likes']);
 
+        return view('threads.show', compact('thread'));
+    }
+
+    public function create()
+    {
+        return view('threads.create');
+    }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title'   => 'required|string|max:255',
-            'content' => 'required|string',
+        $validated = $request->validate([
+            'title'   => 'required|string|max:150',
+            'content' => 'required|string|max:5000',
         ]);
 
         Thread::create([
             'user_id' => auth()->id(),
-            'title'   => $request->title,
-            'content' => $request->content,
+            'title'   => $validated['title'],
+            'content' => $validated['content'],
         ]);
 
-        return back()->with('success', 'Thread berhasil diposting!');
+        return redirect()->route('threads.index')->with('success', 'Thread berhasil diposting!');
     }
-
-    public function create()
-{
-    return view('threads.create');
-}
-
 }

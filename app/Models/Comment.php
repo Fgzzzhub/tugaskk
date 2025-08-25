@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use HasFactory;
 
 class Comment extends Model
 {
+    use HasFactory;
 
-    protected $fillable = ['body', 'user_id', 'thread_id'];
+    protected $fillable = ['body','user_id','thread_id'];
 
     public function user()
     {

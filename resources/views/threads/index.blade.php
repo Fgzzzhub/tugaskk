@@ -1,38 +1,62 @@
-<x-app-layout>
-<div class="max-w-4xl mx-auto py-8">
-    <h1 class="text-3xl font-bold mb-6 text-white">Daftar Threads</h1>
-    <a href="{{ route('threads.create') }}"
-           class="inline-flex items-center gap-2 px-4 py-2 bg-blue-700 hover:bg-blue-900 text-white rounded-lg shadow mt-2 mb-6 transition duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                 viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round"
-                 stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            Buat Thread
-        </a>
+@extends('layouts.app', ['title' => 'Threads'])
 
-    @foreach ($threads as $thread)
-        <div class="bg-gray-200 shadow-md rounded-2xl p-6 mb-5 hover:shadow-lg transition">
-            <div class="flex justify-between items-center">
-                <h2 class="text-xl font-semibold text-black ">
-                    {{ $thread->title }}
-                </h2>   
-                <span class="text-xs text-black">
-                    {{ $thread->created_at->diffForHumans() }}
-                </span>
-            </div>
-            <span class="text-sm text-gray-500">Pembuat: {{ $thread->user->name ?? 'Anonim' }}</span>
-            <p class="text-black my-4">
-                {{ Str::limit($thread->content, 120) }}
-            </p>
-
-            <div class="flex items-center justify-between text-sm text-black">
-                <span>{{ $thread->comments->count() }} Komentar</span>
-                <a href="{{ route('threads.show', $thread->id) }}"
-                   class="px-3 py-1 rounded-xl bg-blue-900 text-white hover:bg-black transition duration-300">
-                    Lihat Komentar
-                </a>
-            </div>
-        </div>
-    @endforeach
+@section('content')
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-semibold">Threads Terbaru</h1>
+    @auth
+    <a href="{{ route('threads.create') }}" class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
+        + Thread Baru
+    </a>
+    @endauth
 </div>
 
-</x-app-layout>
+@if ($threads->count() === 0)
+    <div class="rounded-lg border bg-white p-6 text-gray-500">Belum ada thread.</div>
+@else
+    <div class="grid gap-4">
+        @foreach ($threads as $thread)
+            <article class="rounded-lg border bg-white p-4">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <a href="{{ route('threads.show', $thread) }}" class="text-lg font-semibold hover:text-brand">
+                            {{ $thread->title }}
+                        </a>
+                        <div class="text-sm text-gray-500 mt-1">
+                            oleh <span class="font-medium text-gray-700">{{ $thread->user->name ?? 'Anonim' }}</span>
+                            • {{ $thread->created_at?->diffForHumans() }}
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-gray-600">
+                        <span class="px-2 py-1 rounded-md bg-gray-100">{{ $thread->comments_count }} komentar</span>
+                        <span class="px-2 py-1 rounded-md bg-gray-100">{{ $thread->likes_count }} suka</span>
+                    </div>
+                </div>
+
+                <p class="mt-3 text-gray-700">
+                    {{ \Illuminate\Support\Str::limit(strip_tags($thread->content), 220) }}
+                </p>
+
+                <div class="mt-4 flex items-center gap-2">
+                    <a href="{{ route('threads.show', $thread) }}" class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-50">
+                        Lihat
+                    </a>
+
+                    @auth
+                    <form action="{{ route('threads.like', $thread) }}" method="POST">
+                        @csrf
+                        <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
+                            Suka / Batal
+                        </button>
+                    </form>
+                    @endauth
+                </div>
+            </article>
+        @endforeach
+    </div>
+
+    <div class="mt-6">
+        {{-- Paginator Laravel sudah bergaya Tailwind --}}
+        {{ $threads->links() }}
+    </div>
+@endif
+@endsection

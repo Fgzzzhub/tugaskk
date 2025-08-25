@@ -8,26 +8,25 @@ class MenfessController extends Controller
 {
     public function index()
     {
-        $menfesses = Menfess::with('user')->latest()->get();
+        $menfesses = Menfess::with('user')->latest()->paginate(10);
         return view('menfess.index', compact('menfesses'));
     }
-   // app/Http/Controllers/MenfessController.php
-public function store(Request $request)
-{
-    $request->validate([
-        'from' => 'required|string|max:255',
-        'to' => 'required|string|max:255',
-        'message' => 'required|string',
-    ]);
 
-    Menfess::create([
-        'user_id' => auth()->id(),
-        'from' => $request->from,
-        'to' => $request->to,
-        'message' => $request->message,
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'from'    => 'required|string|max:100',
+            'to'      => 'required|string|max:100',
+            'message' => 'required|string|max:1000',
+        ]);
 
-    return redirect()->back()->with('success', 'Menfess berhasil dikirim!');
-}
+        Menfess::create([
+            'user_id' => auth()->id(),
+            'from'    => $validated['from'],
+            'to'      => $validated['to'],
+            'message' => $validated['message'],
+        ]);
 
+        return back()->with('success', 'Menfess berhasil dikirim!');
+    }
 }
