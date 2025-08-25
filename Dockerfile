@@ -1,6 +1,14 @@
 # ===== Stage 1: Build (Composer + ekstensi dev yang diperlukan untuk build) =====
 FROM php:8.3-cli AS build
 
+
+# SESUDAH (pakai id):
+RUN --mount=type=cache,id=composer-cache,target=/root/.composer/cache \
+    composer install \
+      --no-dev --prefer-dist --no-interaction \
+      --optimize-autoloader --classmap-authoritative
+
+
 # Pastikan locale & tz opsional
 ENV TZ=UTC
 # Hindari kehabisan memori saat install dependency besar
@@ -80,3 +88,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 
 EXPOSE 80
 CMD ["apache2-foreground"]
+
