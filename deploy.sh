@@ -6,6 +6,8 @@ php -v || true
 
 echo "[deploy] Composer platform check (abaikan kalau composer tidak tersedia di runtime):"
 composer check-platform-reqs --no-dev || true
+php -r "touch('/tmp/database.sqlite');"
+
 
 echo "[deploy] Clear & rebuild caches:"
 php artisan optimize:clear
