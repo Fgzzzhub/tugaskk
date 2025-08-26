@@ -1,4 +1,6 @@
-@layout('layouts.guest')
+@extends('layouts.app', ['title' => 'Register'])
+
+@section('content')
 
 <form method="POST" action="{{ route('register') }}" class="space-y-4">
   @csrf
@@ -49,3 +51,5 @@ Sudah memiliki akun?
 Register
   </x-primary-button>
 </form>
+
+@endsection

@@ -1,4 +1,6 @@
-@layout('layouts.guest')
+@extends('layouts.app', ['title' => 'Login'])
+
+@section('content')
 
 {{-- Status / flash --}}
 <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -43,3 +45,5 @@
     Log in
   </x-primary-button>
 </form>
+
+@endsection
