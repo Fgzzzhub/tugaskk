@@ -7,6 +7,14 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+Route::resource('threads', ThreadController::class)->only(['index', 'show']);
+
+Route::middleware('auth')->group(function () {
+    Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
+        ->name('comments.store');
+});
+
+
 Route::get('/', function () {
     return redirect()->route('threads.index');
 });

@@ -75,7 +75,7 @@
                         @endif
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}"
-                                class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-100">
+                                class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-700">
                                 Daftar
                             </a>
                         @endif
@@ -95,7 +95,7 @@
     {{-- FOOTER --}}
     <footer class="border-t bg-gray-900">
         <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-gray-100">
-            &copy; {{ date('Y') }} {{ config('app.name', 'TugasKK') }}. Dibuat dengan Laravel.
+            &copy; {{ date('Y') }} FgzzzApp. Dibuat dengan Laravel.
         </div>
     </footer>
 </body>
