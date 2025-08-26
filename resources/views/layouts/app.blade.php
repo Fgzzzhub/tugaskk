@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
 
     {{-- Tailwind CDN --}}
+    {{-- Tailwind CDN --}}
+    -
     <script src="https://cdn.tailwindcss.com"></script>
+    -
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                DEFAULT: '#4f46e5',
-                dark: '#4338ca',
-              }
-            }
-          }
-        }
-      }
+        -tailwind.config = {
+            /* ...custom colors if any... */
+        }; -
     </script>
-    
+    + @vite(['resources/css/app.css', 'resources/js/app.js'])
+    +
+    <script>
+        +(() => {
+            +
+            const t = localStorage.getItem('theme'); +
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; +
+            if (t === 'dark' || (!t && prefersDark)) document.documentElement.classList.add('dark'); +
+            else document.documentElement.classList.remove('dark'); +
+        })(); +
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            DEFAULT: '#4f46e5',
+                            dark: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
+
 <body class="min-h-screen bg-gray-50 text-gray-800">
     {{-- NAVBAR --}}
     <header class="bg-white shadow-sm sticky top-0 z-50">
@@ -37,9 +58,16 @@
                 <nav class="flex items-center gap-4">
                     <a href="{{ route('threads.index') }}" class="text-sm hover:text-brand">Threads</a>
                     <a href="{{ route('menfess.index') }}" class="text-sm hover:text-brand">Menfess</a>
+                    <button data-toggle-theme type="button"
+                        class="rounded-lg border px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-700"
+                        aria-label="Toggle dark mode">
+                        <span class="dark:hidden">🌙</span>
+                        <span class="hidden dark:inline">☀️</span>
+                    </button>
 
                     @auth
-                        <a href="{{ route('threads.create') }}" class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
+                        <a href="{{ route('threads.create') }}"
+                            class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
                             Buat Thread
                         </a>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
@@ -53,7 +81,8 @@
                             <a href="{{ route('login') }}" class="text-sm hover:text-brand">Masuk</a>
                         @endif
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-100">
+                            <a href="{{ route('register') }}"
+                                class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-100">
                                 Daftar
                             </a>
                         @endif
@@ -77,4 +106,5 @@
         </div>
     </footer>
 </body>
+
 </html>
