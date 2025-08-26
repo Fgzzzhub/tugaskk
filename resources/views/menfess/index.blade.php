@@ -9,7 +9,7 @@
         @endif
 
         {{-- Form Menfess --}}
-        <div class="bg-gray-900 text-gray-100 shadow-md rounded-xl p-6 mb-8">
+        <div class="bg-gray-800 text-gray-100 shadow-md rounded-xl p-6 mb-8">
             <form method="POST" action="{{ route('menfess.store') }}" class="space-y-4">
                 @csrf
                 <div>
@@ -41,7 +41,7 @@
         <h2 class="text-2xl font-semibold mb-4 text-white">Semua Menfess</h2>
         <div class="space-y-4">
             @foreach($menfesses as $m)
-                <div class="bg-gray-900 shadow-md rounded-xl p-5 hover:shadow-lg transition">
+                <div class="bg-gray-800 shadow-md rounded-xl p-5 hover:shadow-lg transition">
                     <p class="text-sm text-gray-300">From: <span class="font-medium text-gray-100">{{ $m->from }}</span></p>
                     <p class="text-sm text-gray-300">To: <span class="font-medium text-gray-100">{{ $m->to }}</span></p>
                     <p class="mt-2 text-gray-10000">{{ $m->message }}</p>

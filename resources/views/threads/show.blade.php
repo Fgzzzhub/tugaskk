@@ -1,13 +1,13 @@
 @extends('layouts.app', ['title' => $thread->title])
 
 @section('content')
-<article class="rounded-lg border bg-gray-900 p-5">
+<article class="rounded-lg border bg-gray-800 p-5">
     <h1 class="text-2xl font-bold">{{ $thread->title }}</h1>
     <div class="mt-1 text-sm text-gray-100">
         oleh <span class="font-medium text-gray-700">{{ $thread->user->name ?? 'Anonim' }}</span>
         • {{ $thread->created_at?->diffForHumans() }}
-        • <span class="px-2 py-0.5 rounded bg-gray-900">{{ $thread->comments_count }} komentar</span>
-        • <span class="px-2 py-0.5 rounded bg-gray-900">{{ $thread->likes_count }} suka</span>
+        • <span class="px-2 py-0.5 rounded bg-gray-800">{{ $thread->comments_count }} komentar</span>
+        • <span class="px-2 py-0.5 rounded bg-gray-800">{{ $thread->likes_count }} suka</span>
     </div>
 
     <div class="mt-4 whitespace-pre-line text-gray-100">
@@ -30,7 +30,7 @@
 </article>
 
 {{-- KOMENTAR --}}
-<section class="mt-6 rounded-lg border bg-gray-900 p-5">
+<section class="mt-6 rounded-lg border bg-gray-800 p-5">
     <h2 class="text-lg font-semibold mb-3">Komentar</h2>
 
     @auth
