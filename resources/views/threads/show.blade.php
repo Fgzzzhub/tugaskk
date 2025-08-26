@@ -1,16 +1,16 @@
 @extends('layouts.app', ['title' => $thread->title])
 
 @section('content')
-<article class="rounded-lg border bg-white p-5">
+<article class="rounded-lg border bg-gray-900 p-5">
     <h1 class="text-2xl font-bold">{{ $thread->title }}</h1>
-    <div class="mt-1 text-sm text-gray-500">
+    <div class="mt-1 text-sm text-gray-100">
         oleh <span class="font-medium text-gray-700">{{ $thread->user->name ?? 'Anonim' }}</span>
         • {{ $thread->created_at?->diffForHumans() }}
-        • <span class="px-2 py-0.5 rounded bg-gray-100">{{ $thread->comments_count }} komentar</span>
-        • <span class="px-2 py-0.5 rounded bg-gray-100">{{ $thread->likes_count }} suka</span>
+        • <span class="px-2 py-0.5 rounded bg-gray-900">{{ $thread->comments_count }} komentar</span>
+        • <span class="px-2 py-0.5 rounded bg-gray-900">{{ $thread->likes_count }} suka</span>
     </div>
 
-    <div class="mt-4 whitespace-pre-line text-gray-800">
+    <div class="mt-4 whitespace-pre-line text-gray-100">
         {{ $thread->content }}
     </div>
 
@@ -18,7 +18,7 @@
         @auth
         <form action="{{ route('threads.like', $thread) }}" method="POST">
             @csrf
-            <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
+            <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-gray-100 hover:bg-brand-dark">
                 Suka / Batal
             </button>
         </form>
@@ -30,7 +30,7 @@
 </article>
 
 {{-- KOMENTAR --}}
-<section class="mt-6 rounded-lg border bg-white p-5">
+<section class="mt-6 rounded-lg border bg-gray-900 p-5">
     <h2 class="text-lg font-semibold mb-3">Komentar</h2>
 
     @auth

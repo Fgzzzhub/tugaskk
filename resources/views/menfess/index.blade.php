@@ -9,23 +9,23 @@
         @endif
 
         {{-- Form Menfess --}}
-        <div class="bg-gray-200 shadow-md rounded-xl p-6 mb-8">
+        <div class="bg-gray-900 text-gray-100 shadow-md rounded-xl p-6 mb-8">
             <form method="POST" action="{{ route('menfess.store') }}" class="space-y-4">
                 @csrf
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">From</label>
+                    <label class="block text-sm font-medium text-gray-100">From</label>
                     <input type="text" name="from" placeholder="Sing sapa kie?"
-                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-100 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">To</label>
+                    <label class="block text-sm font-medium text-gray-100">To</label>
                     <input type="text" name="to" placeholder="Nggo sapa?"
                         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700">Pesan</label>
+                    <label class="block text-sm font-medium text-gray-100">Pesan</label>
                     <textarea name="message" placeholder="Pan ngomong apa..."
                         class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" rows="4" required></textarea>
                 </div>
@@ -41,10 +41,10 @@
         <h2 class="text-2xl font-semibold mb-4 text-white">Semua Menfess</h2>
         <div class="space-y-4">
             @foreach($menfesses as $m)
-                <div class="bg-white shadow-md rounded-xl p-5 hover:shadow-lg transition">
-                    <p class="text-sm text-gray-500">From: <span class="font-medium text-gray-800">{{ $m->from }}</span></p>
-                    <p class="text-sm text-gray-500">To: <span class="font-medium text-gray-800">{{ $m->to }}</span></p>
-                    <p class="mt-2 text-gray-700">{{ $m->message }}</p>
+                <div class="bg-gray-900 shadow-md rounded-xl p-5 hover:shadow-lg transition">
+                    <p class="text-sm text-gray-300">From: <span class="font-medium text-gray-100">{{ $m->from }}</span></p>
+                    <p class="text-sm text-gray-300">To: <span class="font-medium text-gray-100">{{ $m->to }}</span></p>
+                    <p class="mt-2 text-gray-10000">{{ $m->message }}</p>
                     <small class="text-gray-400 text-xs">{{ $m->created_at->diffForHumans() }}</small>
                 </div>
             @endforeach

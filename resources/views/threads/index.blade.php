@@ -11,11 +11,11 @@
 </div>
 
 @if ($threads->count() === 0)
-    <div class="rounded-lg border bg-white p-6 text-gray-500">Belum ada thread.</div>
+    <div class="rounded-lg border bg-gray-900 p-6 text-gray-100">Belum ada thread.</div>
 @else
     <div class="grid gap-4">
         @foreach ($threads as $thread)
-            <article class="rounded-lg border bg-white p-4">
+            <article class="rounded-lg border bg-gray-900 p-4">
                 <div class="flex items-start justify-between gap-3">
                     <div>
                         <a href="{{ route('threads.show', $thread) }}" class="text-lg font-semibold hover:text-brand">
@@ -26,9 +26,9 @@
                             • {{ $thread->created_at?->diffForHumans() }}
                         </div>
                     </div>
-                    <div class="flex items-center gap-3 text-sm text-gray-600">
-                        <span class="px-2 py-1 rounded-md bg-gray-100">{{ $thread->comments_count }} komentar</span>
-                        <span class="px-2 py-1 rounded-md bg-gray-100">{{ $thread->likes_count }} suka</span>
+                    <div class="flex items-center gap-3 text-sm text-gray-100">
+                        <span class="px-2 py-1 rounded-md bg-gray-900">{{ $thread->comments_count }} komentar</span>
+                        <span class="px-2 py-1 rounded-md bg-gray-900">{{ $thread->likes_count }} suka</span>
                     </div>
                 </div>
 
@@ -37,7 +37,7 @@
                 </p>
 
                 <div class="mt-4 flex items-center gap-2">
-                    <a href="{{ route('threads.show', $thread) }}" class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-50">
+                    <a href="{{ route('threads.show', $thread) }}" class="text-sm px-3 py-1.5 rounded-md border bg-gray-900 hover:bg-gray-50 hover:text-black">
                         Lihat
                     </a>
 
