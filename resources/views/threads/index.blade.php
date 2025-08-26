@@ -21,8 +21,8 @@
                         <a href="{{ route('threads.show', $thread) }}" class="text-lg font-semibold hover:text-brand">
                             {{ $thread->title }}
                         </a>
-                        <div class="text-sm text-gray-500 mt-1">
-                            oleh <span class="font-medium text-gray-700">{{ $thread->user->name ?? 'Anonim' }}</span>
+                        <div class="text-sm text-gray-300 mt-1">
+                            oleh <span class="font-medium text-gray-100">{{ $thread->user->name ?? 'Anonim' }}</span>
                             • {{ $thread->created_at?->diffForHumans() }}
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
 
-                <p class="mt-3 text-gray-700">
+                <p class="mt-3 text-gray-100">
                     {{ \Illuminate\Support\Str::limit(strip_tags($thread->content), 220) }}
                 </p>
 

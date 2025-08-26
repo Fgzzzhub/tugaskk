@@ -27,7 +27,7 @@ class ThreadController extends Controller
             'likes',
         ])->loadCount(['comments','likes']);
 
-        return view('threads.show', compact('thread'));
+        return view('threads.show', compact('threads'));
     }
 
     public function create()

@@ -15,19 +15,19 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-100">From</label>
                     <input type="text" name="from" placeholder="Sing sapa kie?"
-                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-100 focus:border-indigo-500 sm:text-sm" required>
+                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-100 focus:border-indigo-500 sm:text-sm text-gray-900" required >
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-100">To</label>
                     <input type="text" name="to" placeholder="Nggo sapa?"
-                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900" required >
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-100">Pesan</label>
                     <textarea name="message" placeholder="Pan ngomong apa..."
-                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" rows="4" required></textarea>
+                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900" rows="4" required ></textarea>
                 </div>
 
                 <button type="submit"
