@@ -16,6 +16,15 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/register', function() {
+    return view('auth.register');
+});
+
+Route::get('/login', function() {
+    return view('auth.login');
+});
+
+
 // Menfess
 Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index');
 Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');

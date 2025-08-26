@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
+    <title>FgzzzApp</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -16,13 +16,13 @@
      @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <script>
-        +(() => {
-            +
-            const t = localStorage.getItem('theme'); +
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; +
-            if (t === 'dark' || (!t && prefersDark)) document.documentElement.classList.add('dark'); +
-            else document.documentElement.classList.remove('dark'); +
-        })(); +
+        (() => {
+            
+            const t = localStorage.getItem('theme'); 
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches; 
+            if (t === 'dark' || (!t && prefersDark)) document.documentElement.classList.add('dark'); 
+            else document.documentElement.classList.remove('dark'); 
+        })(); 
     </script>
     <script>
         tailwind.config = {
@@ -51,7 +51,7 @@
         <div class="mx-auto max-w-6xl px-4">
             <div class="flex h-14 items-center justify-between">
                 <a href="{{ route('threads.index') }}" class="font-semibold tracking-tight text-brand">
-                    {{ config('app.name', 'TugasKK') }}
+                    FgzzzApp
                 </a>
 
                 <nav class="flex items-center gap-4">
@@ -93,8 +93,8 @@
     </main>
 
     {{-- FOOTER --}}
-    <footer class="border-t bg-white">
-        <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-gray-500">
+    <footer class="border-t bg-gray-900">
+        <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-gray-100">
             &copy; {{ date('Y') }} {{ config('app.name', 'TugasKK') }}. Dibuat dengan Laravel.
         </div>
     </footer>
