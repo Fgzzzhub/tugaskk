@@ -44,10 +44,10 @@
 </head>
 
 
-    + <body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
     
     {{-- NAVBAR --}}
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-gray-900 text-gray-100 shadow-sm sticky top-0 z-50">
         <div class="mx-auto max-w-6xl px-4">
             <div class="flex h-14 items-center justify-between">
                 <a href="{{ route('threads.index') }}" class="font-semibold tracking-tight text-brand">
@@ -57,12 +57,6 @@
                 <nav class="flex items-center gap-4">
                     <a href="{{ route('threads.index') }}" class="text-sm hover:text-brand">Threads</a>
                     <a href="{{ route('menfess.index') }}" class="text-sm hover:text-brand">Menfess</a>
-                    <button data-toggle-theme type="button"
-                        class="rounded-lg border px-3 py-1 text-sm hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-300 dark:border-gray-700"
-                        aria-label="Toggle dark mode">
-                        <span class="dark:hidden">🌙</span>
-                        <span class="hidden dark:inline">☀️</span>
-                    </button>
 
                     @auth
                         <a href="{{ route('threads.create') }}"
