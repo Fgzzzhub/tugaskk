@@ -15,6 +15,12 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
+Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create'); // form create
+Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');        // simpan
+Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
+
+
 Route::get('/', function () {
     return redirect()->route('threads.index');
 });
@@ -38,10 +44,11 @@ Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index
 Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');
 
 // Threads (index & show publik; create/store butuh login)
-Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
-Route::get('/threads/create', [ThreadController::class, 'create'])->middleware('auth')->name('threads.create');
-Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
-Route::post('/threads', [ThreadController::class, 'store'])->middleware('auth')->name('threads.store');
+// Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
+// Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
+// Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
+
+// Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 
 // Komentar & Like (wajib login)
 Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])

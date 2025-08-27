@@ -2,32 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Thread;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ThreadController extends Controller
 {
-    public function index()
+    // Pastikan hanya pengguna login yang bisa create/store
+    public function __construct()
     {
-        // Eager-load user & counts agar hemat query
-        $threads = Thread::with(['user:id,name'])
-            ->withCount(['comments','likes'])
-            ->latest()
-            ->paginate(10);
-
-        return view('threads.index', compact('threads'));
+        $this->middleware('auth')->only(['create', 'store']);
     }
 
-    public function show(Thread $thread)
+    public function index()
     {
-        // Muat relasi untuk tampilan detail
-        $thread->load([
-            'user:id,name',
-            'comments.user:id,name',
-            'likes',
-        ])->loadCount(['comments','likes']);
-
-        return view('threads.show', compact('threads'));
+        $threads = Thread::latest()->paginate(10);
+        return view('threads.index', compact('threads'));
     }
 
     public function create()
@@ -37,17 +27,24 @@ class ThreadController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title'   => 'required|string|max:150',
-            'content' => 'required|string|max:5000',
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'body'  => ['required', 'string'],
         ]);
 
-        Thread::create([
-            'user_id' => auth()->id(),
-            'title'   => $validated['title'],
-            'content' => $validated['content'],
+        $thread = Thread::create([
+            'title'   => $data['title'],
+            'body'    => $data['body'],
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('threads.index')->with('success', 'Thread berhasil diposting!');
+        return redirect()
+            ->route('threads.show', $thread)
+            ->with('success', 'Thread berhasil dibuat.');
+    }
+
+    public function show(Thread $thread)
+    {
+        return view('threads.show', compact('thread'));
     }
 }
