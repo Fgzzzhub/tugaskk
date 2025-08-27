@@ -21,7 +21,7 @@ Route::get('/', function () {
 // Dashboard (login required)
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+});
 
 Route::get('/register', function() {
     return view('auth.register');
@@ -38,7 +38,6 @@ Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')
 
 // Threads (index & show publik; create/store butuh login)
 
-Route::resource('threads', ThreadController::class)->only(['index', 'show']);
 Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
