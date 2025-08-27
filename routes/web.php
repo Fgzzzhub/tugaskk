@@ -17,9 +17,6 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 Route::get('/', function () {
     return redirect()->route('threads.index');
 });
-Route::get('/threads', function () {
-    return redirect()->route('threads.index');
-});
 
 // Dashboard (login required)
 Route::get('/dashboard', function () {
@@ -40,6 +37,9 @@ Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index
 Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');
 
 // Threads (index & show publik; create/store butuh login)
+Route::get('/threads', function () {
+    return redirect()->route('threads.index');
+});
 
 // Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
