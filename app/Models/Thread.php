@@ -21,8 +21,14 @@ class Thread extends Model
     }
 
 
+    // app/Models/Thread.php
     public function likes()
     {
-        return $this->hasMany(Like::class);
+        return $this->hasMany(\App\Models\Like::class);
+    }
+    public function isLikedBy(?\App\Models\User $user): bool
+    {
+        if (!$user) return false;
+        return $this->likes->contains('user_id', $user->id);
     }
 }

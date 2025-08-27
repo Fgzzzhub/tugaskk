@@ -15,14 +15,18 @@
     </div>
 
     <div class="mt-4 flex items-center gap-2">
-        @auth
-        <form action="{{ route('threads.like', $thread) }}" method="POST">
+        <form action="{{ route('threads.like', $thread) }}" method="POST" class="inline">
             @csrf
-            <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-gray-100 hover:bg-brand-dark">
-                Suka / Batal
+            <button class="px-3 py-1 border rounded">
+              @auth
+                {{ $thread->likes->contains('user_id', auth()->id()) ? '💔 Unlike' : '👍 Like' }}
+              @else
+                👍 Like
+              @endauth
             </button>
-        </form>
-        @endauth
+          </form>
+          <span class="ml-2 text-sm">{{ $thread->likes_count ?? $thread->likes()->count() }} likes</span>
+          
         <a href="{{ route('threads.index') }}" class="text-sm px-3 py-1.5 rounded-md border hover:bg-gray-50">
             Kembali
         </a>

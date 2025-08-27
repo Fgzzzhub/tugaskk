@@ -14,18 +14,12 @@ class ThreadController extends Controller
         return view('threads.index', compact('threads'));
     }
 
-    public function show(Thread $thread)
-    {
-        // Muat relasi untuk tampilan detail
-        $thread->load([
-            'user:id,name',
-            'comments.user:id,name',
-            'likes',
-        ])->loadCount(['comments', 'likes']);
-
-        return view('threads.show', compact('threads'));
-    }
-
+  public function show(Thread $thread)
+{
+    $thread->load(['user:id,name']);
+    $thread->loadCount('likes');
+    return view('threads.show', compact('thread'));
+}
     public function create()
     {
         return view('threads.create');

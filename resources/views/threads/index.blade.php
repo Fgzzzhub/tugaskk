@@ -44,14 +44,20 @@
                         Lihat
                     </a>
 
-                    @auth
                     <form action="{{ route('threads.like', $thread) }}" method="POST">
                         @csrf
-                        <button class="text-sm px-3 py-1.5 rounded-md bg-brand text-white hover:bg-brand-dark">
-                            Suka / Batal
+                        <button class="px-3 py-1 border rounded">
+                            @auth
+                                {{ $thread->likes->contains('user_id', auth()->id()) ? '💔 Unlike' : '👍 Like' }}
+                            @else
+                                👍 Like
+                            @endauth
                         </button>
                     </form>
-                    @endauth
+
+                    <span class="text-sm">
+                        {{ $thread->likes_count ?? $thread->likes()->count() }} likes
+                    </span>
                 </div>
             </article>
         @endforeach

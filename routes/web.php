@@ -41,7 +41,12 @@ require __DIR__ . '/auth.php';
 
 
 Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])->name('comments.store');
-Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])->name('threads.like');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])
+        ->whereNumber('thread')
+        ->name('threads.like');
+});
+
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 
 // });
