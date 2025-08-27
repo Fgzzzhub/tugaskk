@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['user_id','title','content'];
+    protected $fillable = ['user_id', 'title', 'content'];
 
     public function user()
     {
@@ -20,6 +17,7 @@ class Thread extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
 
     public function likes()
     {
