@@ -22,8 +22,10 @@
                             {{ $thread->title }}
                         </a>
                         <div class="text-sm text-gray-300 mt-1">
-                            oleh <span class="font-medium text-gray-100">{{ $thread->user->name ?? 'Anonim' }}</span>
+                            oleh <span class="font-medium text-gray-100">{{ $thread->user?->name ?? 'User' }}
+                            </span>
                             • {{ $thread->created_at?->diffForHumans() }}
+
                         </div>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-gray-100">
@@ -33,7 +35,8 @@
                 </div>
 
                 <p class="mt-3 text-gray-100">
-                    {{ \Illuminate\Support\Str::limit(strip_tags($thread->content), 220) }}
+                    {{ \Illuminate\Support\Str::limit($thread->content, 160) }}
+
                 </p>
 
                 <div class="mt-4 flex items-center gap-2">
