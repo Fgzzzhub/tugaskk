@@ -36,13 +36,14 @@ Route::get('/login', function() {
 Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index');
 Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');
 
-// Route::resource('threads', ThreadController::class)->only(['index', 'show']);
+// Threads (index & show publik; create/store butuh login)
 
-// Threads
+Route::resource('threads', ThreadController::class)->only(['index', 'show']);
 Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
-Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
+Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
+
 
 // Komentar & Like (wajib login)
 // Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
