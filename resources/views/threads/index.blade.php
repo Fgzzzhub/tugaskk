@@ -22,7 +22,7 @@
                             {{ $thread->title }}
                         </a>
                         <div class="text-sm text-gray-300 mt-1">
-                            oleh <span class="font-medium text-gray-100">{{ $thread->user?->name ?? 'User' }}
+                            oleh <span class="font-medium text-gray-100">{{ $thread->user?->name ?? 'Anonim' }}
                             </span>
                             • {{ $thread->created_at?->diffForHumans() }}
 

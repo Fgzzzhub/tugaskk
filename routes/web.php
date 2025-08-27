@@ -33,11 +33,15 @@ Route::get('/login', function() {
 
 // Threads (index & show publik; create/store butuh login)
 
+// --- Publik (BAIK untuk guest & user yang login) ---
 Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
-Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
-Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
 
+// --- Hanya butuh login untuk membuat thread ---
+Route::middleware('auth')->group(function () {
+    Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
+    Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
+});
 
 
 // Menfess

@@ -10,11 +10,7 @@ class ThreadController extends Controller
     public function index()
     {
         // Eager-load user & counts agar hemat query
-        $threads = Thread::with(['user:id,name'])
-            ->withCount(['comments','likes'])
-            ->latest()
-            ->paginate(10);
-
+        $threads = \App\Models\Thread::with(['user:id,name'])->latest()->paginate(10);
         return view('threads.index', compact('threads'));
     }
 
@@ -25,7 +21,7 @@ class ThreadController extends Controller
             'user:id,name',
             'comments.user:id,name',
             'likes',
-        ])->loadCount(['comments','likes']);
+        ])->loadCount(['comments', 'likes']);
 
         return view('threads.show', compact('threads'));
     }
