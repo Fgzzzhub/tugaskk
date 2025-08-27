@@ -7,7 +7,6 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-Route::resource('threads', ThreadController::class)->only(['index', 'show']);
 
 Route::middleware('auth')->group(function () {
     Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
@@ -37,19 +36,20 @@ Route::get('/login', function() {
 Route::get('/menfess', [MenfessController::class, 'index'])->name('menfess.index');
 Route::post('/menfess', [MenfessController::class, 'store'])->middleware('auth')->name('menfess.store');
 
-// Threads (index & show publik; create/store butuh login)
+// Route::resource('threads', ThreadController::class)->only(['index', 'show']);
+
+// Threads
 Route::get('/threads', [ThreadController::class, 'index'])->name('threads.index');
 Route::get('/threads/create', [ThreadController::class, 'create'])->name('threads.create');
 Route::post('/threads', [ThreadController::class, 'store'])->name('threads.store');
-
 Route::get('/threads/{thread}', [ThreadController::class, 'show'])->name('threads.show');
 
 // Komentar & Like (wajib login)
-Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
-    ->middleware('auth')->name('comments.store');
+// Route::post('/threads/{thread}/comments', [CommentController::class, 'store'])
+//     ->middleware('auth')->name('comments.store');
 
-Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])
-    ->middleware('auth')->name('threads.like');
+// Route::post('/threads/{thread}/like', [LikeController::class, 'toggle'])
+//     ->middleware('auth')->name('threads.like');
 
 // Logout
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
